@@ -1,0 +1,97 @@
+#box-container {
+  max-width: 700px;
+  margin: 50px auto 0;
+}
+
+#box-container header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#box-container header h1 {
+  font-size: 21px;
+  padding-left: 15px;
+  margin-left: 15px;
+  border-left: 1px solid #ddd;
+}
+
+.logo {
+  font-size: 21px;
+}
+
+#box-container header button svg {
+  margin-right: 10px;
+}
+
+#box-container header button:hover {
+  opacity: 0.9;
+}
+
+#box-container ul {
+  margin: 30px 0;
+  list-style: none;
+}
+
+#box-container ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#box-container ul li + li {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+#box-container ul li span {
+  color: #454545;
+  font-size: 13px;
+}
+
+#box-container form {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  background: #f2f2f3;
+  padding: 10px;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  margin: 35px auto;
+}
+
+#box-container form input {
+  height: 48px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+#box-container form button {
+  height: 48px;
+  background: #2276b1;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 0 20px;
+  color: #fff;
+  font-weight: bold;
+  border: 0;
+  cursor: pointer;
+}
+
+#box-container form button:hover {
+  opacity: 0.8;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.grupo-detalhes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
