@@ -24,13 +24,23 @@ export default class Pacote extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    
-    const response = await api.post(`pacote/${this.state.pacote.codigo}/atualizacao`, {
-      local: this.state.local,
-      tipo: this.state.tipo
-    });
 
-    this.setState({ pacote: { ...this.state.pacote, atualizacoes: [ ...this.state.pacote.atualizacoes, response.data] } })
+    const response = await api.post(
+      `pacote/${this.state.pacote.codigo}/atualizacao`,
+      {
+        local: this.state.local,
+        tipo: this.state.tipo
+      }
+    );
+
+    this.setState({
+      tipo: "",
+      local: "",
+      pacote: {
+        ...this.state.pacote,
+        atualizacoes: [...this.state.pacote.atualizacoes, response.data]
+      }
+    });
   };
 
   handleInputChange = () => {};
@@ -39,7 +49,7 @@ export default class Pacote extends Component {
     return (
       <div id="box-container">
         <header>
-          <span className="logo">Rastreamento</span>
+          <span className="logo"><a href="/">Rastreamento</a></span>
           <h1>{this.state.pacote.codigo}</h1>
         </header>
 

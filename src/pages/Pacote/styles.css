@@ -20,6 +20,12 @@
   font-size: 21px;
 }
 
+.logo a{
+  text-decoration: none;
+  color: #333333;
+  cursor: pointer;
+}
+
 #box-container header button svg {
   margin-right: 10px;
 }
