@@ -1,11 +1,15 @@
 import React, { Component } from "react";
+import SweetAlert from "sweetalert-react";
+
 import api from "../../services/api";
 
+import "sweetalert/dist/sweetalert.css";
 import "./styles.css";
 
 export default class Main extends Component {
   state = {
-    codigoPacote: ""
+    codigoPacote: "",
+    showAlert: false
   };
 
   async componentDidMount() {
@@ -18,6 +22,15 @@ export default class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    const buscaPacoteExistente = await api.get(
+      `pacote/${this.state.codigoPacote}`
+    );
+
+    if (buscaPacoteExistente.data !== null) {
+      this.setState({ showAlert: true });
+      return;
+    }
 
     const response = await api.post("pacote", {
       codigo: this.state.codigoPacote
@@ -33,6 +46,14 @@ export default class Main extends Component {
   render() {
     return (
       <div id="main-container">
+        <SweetAlert
+          show={this.state.showAlert}
+          type="error"
+          title="Ooops!"
+          text="Este pacote já existe. Tente outro código."
+          onConfirm={() => this.setState({ showAlert: false })}
+        />
+
         <form onSubmit={this.handleSubmit}>
           <input
             placeholder="Código do pacote"
