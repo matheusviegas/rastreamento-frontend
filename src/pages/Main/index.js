@@ -23,6 +23,10 @@ export default class Main extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    if (this.state.codigoPacote.length === 0) {
+      return;
+    }
+
     const buscaPacoteExistente = await api.get(
       `pacote/${this.state.codigoPacote}`
     );
@@ -55,12 +59,13 @@ export default class Main extends Component {
         />
 
         <form onSubmit={this.handleSubmit}>
+          <h1 className="titulo">Rastreamento</h1>
           <input
             placeholder="Código do pacote"
             value={this.state.codigoPacote}
             onChange={this.handleInputChange}
           />
-          <button type="submit">Salvar</button>
+          <button type="submit">Cadastrar</button>
         </form>
 
         <ul className="lista-pacotes">

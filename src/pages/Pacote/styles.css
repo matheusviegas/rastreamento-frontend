@@ -1,6 +1,7 @@
 #box-container {
   max-width: 700px;
-  margin: 50px auto 0;
+  padding-top: 50px;
+  margin: 0 auto;
 }
 
 #box-container header {
@@ -26,10 +27,6 @@
   cursor: pointer;
 }
 
-#box-container header button svg {
-  margin-right: 10px;
-}
-
 #box-container header button:hover {
   opacity: 0.9;
 }
@@ -45,7 +42,7 @@
   align-items: center;
 }
 
-#box-container ul li + li {
+#box-container ul li+li {
   padding-top: 20px;
   margin-top: 20px;
   border-top: 1px solid #eee;
@@ -76,8 +73,7 @@
   width: 100%;
 }
 
-#box-container form button,
-.btnRemover {
+#box-container form button, .btnRemover {
   height: 48px;
   background: #2276b1;
   border-radius: 4px;
@@ -113,4 +109,17 @@
 
 .top {
   display: flex;
+}
+
+.grupo-detalhes-acoes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btnDeletaAtualizacao {
+  margin-left: 15px;
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
 }

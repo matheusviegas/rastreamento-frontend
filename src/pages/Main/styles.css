@@ -19,6 +19,7 @@
   font-size: 16px;
   padding: 0 20px;
   margin-top: 30px;
+  text-transform: uppercase;
 }
 
 #main-container form button {
@@ -61,4 +62,7 @@
   font-size: 16px
 }
 
-
+.titulo {
+  color: #333333;
+  text-align: center;
+}

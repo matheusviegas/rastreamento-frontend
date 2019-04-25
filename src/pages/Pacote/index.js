@@ -6,7 +6,7 @@ import pt from "date-fns/locale/pt";
 import SweetAlert from "sweetalert-react";
 import { Link } from "react-router-dom";
 
-import { MdAddBox } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 import "sweetalert/dist/sweetalert.css";
 import "./styles.css";
@@ -16,14 +16,17 @@ export default class Pacote extends Component {
     pacote: null,
     local: "",
     tipo: "",
-    showAlert: false
+    showAlert: false,
+    carregando: true,
+    atualizacaoRemover: null
   };
 
   async componentDidMount() {
     const response = await api.get(`pacote/${this.props.match.params.codigo}`);
     console.log(response.data);
     this.setState({
-      pacote: response.data
+      pacote: response.data,
+      carregando: false
     });
   }
 
@@ -48,12 +51,12 @@ export default class Pacote extends Component {
     });
   };
 
-  handleInputChange = () => {};
+  handleInputChange = () => { };
 
   render() {
     return (
       <div id="box-container">
-        {this.state.pacote == null && <h2>Pacote não encontrado.</h2>}
+        {this.state.pacote == null && !this.state.carregando && <h2>Pacote não encontrado.</h2>}
         <SweetAlert
           show={this.state.showAlert}
           title="Você tem certeza?"
@@ -64,12 +67,26 @@ export default class Pacote extends Component {
           cancelButtonText="Cancelar"
           type="warning"
           onConfirm={async () => {
-            await api.delete(`pacote/${this.state.pacote.codigo}`);
-            this.setState({ showAlert: false });
-            this.props.history.goBack();
+            if (this.state.atualizacaoRemover !== null) {
+              await api.delete(`pacote/${this.state.pacote.codigo}/atualizacao/${this.state.atualizacaoRemover._id}`)
+
+              let arrayAtualizacoes = this.state.pacote.atualizacoes;
+
+              for (let i = 0; i < arrayAtualizacoes.length; i++) {
+                if (arrayAtualizacoes[i]._id === this.state.atualizacaoRemover._id) {
+                  arrayAtualizacoes.splice(i, 1);
+                }
+              }
+
+              await this.setState({ showAlert: false, atualizacaoRemover: null });
+            } else {
+              await api.delete(`pacote/${this.state.pacote.codigo}`);
+              this.setState({ showAlert: false });
+              this.props.history.push("/");
+            }
           }}
           onCancel={() => {
-            this.setState({ showAlert: false });
+            this.setState({ showAlert: false, atualizacaoRemover: null });
           }}
           onClose={() => console.log("close")}
         />
@@ -86,7 +103,7 @@ export default class Pacote extends Component {
               className="btnRemover"
               onClick={() => this.setState({ showAlert: true })}
             >
-              Deletar
+              <MdDelete color="#FFFFFF" size={15} />
             </button>
           </header>
         )}
@@ -120,14 +137,23 @@ export default class Pacote extends Component {
               this.state.pacote.atualizacoes.map(atualizacao => (
                 <li key={atualizacao._id}>
                   <strong>{atualizacao.local}</strong>
-                  <div className="grupo-detalhes">
-                    <span>{atualizacao.tipo}</span>
-                    <span>
-                      há{" "}
-                      {distanceInWords(atualizacao.createdAt, new Date(), {
-                        locale: pt
-                      })}
-                    </span>
+
+                  <div className="grupo-detalhes-acoes">
+                    <div className="grupo-detalhes">
+                      <span>{atualizacao.tipo}</span>
+                      <span>
+                        há{" "}
+                        {distanceInWords(atualizacao.createdAt, new Date(), {
+                          locale: pt
+                        })}
+                      </span>
+                    </div>
+                    <button
+                      className="btnRemover btnDeletaAtualizacao"
+                      onClick={() => this.setState({ showAlert: true, atualizacaoRemover: atualizacao })}
+                    >
+                      <MdDelete color="#FFFFFF" size={12} />
+                    </button>
                   </div>
                 </li>
               ))}
